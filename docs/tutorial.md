@@ -245,17 +245,37 @@ following folder structure:
 
 and move your `app.elm` and the `index.html` accordingly.
 
+We will also move the one line of JavaScript code `Elm.fullscreen(Elm.Main)`
+from the index.html to the app.js, so it looks like this:
+
+```JavaScript
+// src/js/app.js
+
+Elm.fullscreen(Elm.Main)
+```
 
 ### 2.2 Build your application
 
 Our plan is to create a public directory with only the index.html and the app.js
-in it:
+in it, which will be the only things that is deployed to production:
 
 ```
 .
 └── public
-    ├── app.js
+    ├── bundle.js
     └── index.html
+```
+
+We will concatenate the elm.js with our app.js together in one file called
+bundle.js. So our new index.html now looks like:
+
+```HTML
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no">
+<body></body>
+<script src="bundle.js"></script>
 ```
 
 Now we have to amend our build process a bit:
@@ -267,10 +287,12 @@ Now we have to amend our build process a bit:
     $ cat tmp/elm.js src/js/app.js > public/app.js
     $ rm -rf tmp
 
+
+
 Now we can run `open public/index.html` to see our application running as
 before (we still can see "Hello, World!").
 
-### 2.x - Managing your files via version control
+### 2.3 - Managing your files via version control
 
 Inside your project root folder, initialize a new git repository:
 
