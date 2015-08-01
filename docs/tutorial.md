@@ -201,6 +201,15 @@ from above as child of the body tag:
 In this chapter we have done the first baby steps of installing the Elm
 platform, compiling a small elm program and displaying the output in a browser.
 
+Our little project consists of thre files:
+
+* app.elm
+* elm.js
+* index.html
+
+There have been some other files created by the compiler which we will ignore
+for now.
+
 This minimal complete example can be easily extended to show more complex
 static content in a HTML document.
 
@@ -215,9 +224,61 @@ If you are not interested by this or already have your own way managing your
 development process you can skip this chapter and jump right into the next
 chapter where we will extend our previously developed Elm application.
 
-### 2.1 - Managing your files via version control
+### 2.1 Creating a scalable folder structure
 
-Now as we have a minimal complete application running, we want to have a look
+Currently all our files are in the project root. This will become very
+confusing as our application grows.
+
+We could separate our source files from generated files. Let's create the
+following folder structure:
+
+```
+.
+└── src
+    ├── elm
+    │   └── app.elm
+    ├── html
+    │   └── index.html
+    └── js
+        └── app.js
+```
+
+and move your `app.elm` and the `index.html` accordingly.
+
+
+### 2.2 Build your application
+
+Our plan is to create a public directory with only the index.html and the app.js
+in it:
+
+```
+.
+└── public
+    ├── app.js
+    └── index.html
+```
+
+Now we have to amend our build process a bit:
+
+    $ mkdir public
+    $ cp src/html/index.html public/
+    $ mkdir tmp
+    $ elm-make src/elm/app.elm --output tmp/elm.js
+    $ cat tmp/elm.js src/js/app.js > public/app.js
+    $ rm -rf tmp
+
+Now we can run `open public/index.html` to see our application running as
+before (we still can see "Hello, World!").
+
+### 2.x - Managing your files via version control
+
+Inside your project root folder, initialize a new git repository:
+
+    $ git init 
+
+You may wanna create a .gitignore file and ignore the elm.
+
+
 
 
 
