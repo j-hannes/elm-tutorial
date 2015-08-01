@@ -4,6 +4,10 @@ This is a tutorial about how to create a web application where your client
 logic is written in [Elm](http://elm-lang.org). To learn more about the
 language you might want to read http://elm-lang.org/docs.
 
+If you like the readability, composability and type-safety of Haskell programs
+combined with the powerful paradigms of functional reactive programming, then
+Elm might be for you.
+
 This document jumps right in to create a complete Elm web application from
 scratch, starting with a very simple static web site, which then gets scaled up
 into a modular web application.
@@ -357,7 +361,7 @@ and add it as remote repository to our project:
 From here our project is under version control which makes it easy to undo/redo
 changes and to add new features via branching etc.
 
-### 2.4 Task management
+### 2.4 Task automation
 
 If we look at the number of commands required for our build we can easily see
 that it would be nice to put that into an automated process / script. Another
