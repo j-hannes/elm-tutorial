@@ -1,8 +1,12 @@
 # How to develop an Elm web application
 
-To learn what Elm is and how it works read http://elm-lang.org/docs. Here we
-will now create a complete Elm web application from scratch, starting very
-simple and then refactoring it increasingly into a modular web application.
+This is a tutorial about how to create a web application where your client
+logic is written in [Elm](http://elm-lang.org). To learn more about the
+language you might want to read http://elm-lang.org/docs.
+
+This document jumps right in to create a complete Elm web application from
+scratch, starting with a very simple static web site, which then gets scaled up
+into a modular web application.
 
 ## Chapter 1 - Hello world example
 
@@ -57,9 +61,9 @@ Some new packages are needed. Here is the upgrade plan.
 Do you approve of this plan? (y/n)
 ```
 
-Approve this and elm-make will install the `elm-lang/core` package.
+Approve this and _elm-make_ will install the _elm-lang/core_ package.
 
-Next elm will tell you that there are some errors in you source file:
+Then the compiler will tell you that there are some errors in you source file:
 
 ```
 ## ERRORS in app.elm ###########################################################
@@ -101,15 +105,17 @@ Detected errors in 1 module.
 ```
 
 That's because the compiler can't find the functions `span`, `class` and `text`,
-which are part of the [elm-html package](https://github.com/evancz/elm-html) 
-that we haven't installed yet.
+and tries to guess what you could mean instead. On the homepage there is no
+mention that those functions are part of the package
+[elm-html](https://github.com/evancz/elm-html) that needs to be imported before
+we can use its functions.
 
 So let's go ahead and install the missing dependency:
 
     $ elm-package install evancz/elm-html
 
 and agree to install the package. Elm will also suggest to install the
-`virtual-dom` package which we also agree. Elm will download the packages and
+_virtual-dom_ package which we also agree. Elm will download the packages and
 hopefully finish with
 
 ```
@@ -153,8 +159,8 @@ Successfully generated elm.js
 
 ### 1.5 - Running the application
 
-Now as our program has been transpiled successfully, we can include the
-generated JavaScript code in a HTML file to view in in a browser.
+Now as our program has been compiled successfully, we can include the
+generated JavaScript code in a HTML file to view it in a browser.
 
 Let's create a index.html file with the following content:
 ```HTML
@@ -198,27 +204,26 @@ from above as child of the body tag:
 
 ### 1.6 - Summary
 
-In this chapter we have done the first baby steps of installing the Elm
-platform, compiling a small elm program and displaying the output in a browser.
+Now we have a minimal complete elm application running which compiles into
+JavaScript which can then be included into a HTML document and displayed in a
+web browser. This example can easily be extended to display a more complex DOM
+tree.
 
-Our little project consists of thre files:
-
+So far our little project consists of thre files:
 * app.elm
 * elm.js
 * index.html
 
-There have been some other files created by the compiler which we will ignore
-for now.
-
-This minimal complete example can be easily extended to show more complex
-static content in a HTML document.
+The Elm compiler also created an _elm-package.json_ file which lists
+dependencies and project properties (similar to node's package.json) as well as
+an _elm-stuff_ directory which contains packages that are used in our app.
 
 ## Chapter 2 - Dev environment
 
 As our project will grow it is good practice to invest some time to set up a
 good development environment (including deployment) to create a proper modular
-application structure and to have reccuring tasks automated. In this chapter
-we will take care of that.
+application structure and to have reccuring tasks automated. In this chapter we
+will take care of that.
 
 If you are not interested by this or already have your own way managing your
 development process you can skip this chapter and jump right into the next
@@ -229,7 +234,7 @@ chapter where we will extend our previously developed Elm application.
 Currently all our files are in the project root. This will become very
 confusing as our application grows.
 
-We could separate our source files from generated files. Let's create the
+First, we could separate our source files from generated files. Let's create the
 following folder structure:
 
 ```
@@ -243,7 +248,7 @@ following folder structure:
         └── app.js
 ```
 
-and move your `app.elm` and the `index.html` accordingly.
+and move your app.elm and the index.html accordingly.
 
 We will also move the one line of JavaScript code `Elm.fullscreen(Elm.Main)`
 from the index.html to the app.js, so it looks like this:
@@ -266,7 +271,7 @@ in it, which will be the only things that is deployed to production:
     └── index.html
 ```
 
-We will concatenate the elm.js with our app.js together in one file called
+We will concatenate the elm.js and our app.js together in one file called
 bundle.js. So our new index.html now looks like:
 
 ```HTML
@@ -287,22 +292,82 @@ Now we have to amend our build process a bit:
     $ cat tmp/elm.js src/js/app.js > public/app.js
     $ rm -rf tmp
 
-
+If you are now thinking that looks a bit complicated then you are right, but
+dont worry, we will take care of that build process in just a bit.
 
 Now we can run `open public/index.html` to see our application running as
 before (we still can see "Hello, World!").
 
 ### 2.3 - Managing your files via version control
 
+It is time to use a version control system so we can keep track of our changes
+in a history and work on the code from different places or via collaboration.
+
 Inside your project root folder, initialize a new git repository:
 
     $ git init 
 
-You may wanna create a .gitignore file and ignore the elm.
+You may wanna create a .gitignore file and ignore the _elm-stuff_ folder (those
+dependencies will be created via the elm package manager) as well as the
+_public_ folder as it's content is copied or compiled and can be reproduced any
+time.
 
+```
+# .gitignore
+elm-stuff
+public
+```
 
+It is also good practice to always have a readme.md file, so we could create one
+now:
 
+```Markdown
+# My first elm app
 
+Application to follow along
+https://github.com/j-hannes/my-first-elm-app/blob/master/docs/tutorial.md.
+```
 
+Now we can add our current program to the repository:
+
+    $ git add .
+
+commit the changes with
+
+    $ git commit -v
+
+and enter a commit message ("Initialize repository" or something like that) to
+complete the commit. Your commit should contain the following files
+
+```Gitcommit
+# new file:   .gitignore
+# new file:   elm-package.json
+# new file:   readme.md
+# new file:   src/elm/app.elm
+# new file:   src/html/index.html
+# new file:   src/js/app.js
+```
+
+If we want we can also 
+[create a new github repository](https://help.github.com/articles/create-a-repo)
+and add it as remote repository to our project:
+
+    $ git remote add origin git@github.com:my-username/my-repository
+
+From here our project is under version control which makes it easy to undo/redo
+changes and to add new features via branching etc.
+
+### 2.4 Task management
+
+If we look at the number of commands required for our build we can easily see
+that it would be nice to put that into an automated process / script. Another
+advantage is that everybody who checks out and uses our app will build things
+in the same way.
+
+So let's go ahead and use Gulp as build system for this purpose:
+
+    $ npm install --global gulp # if you haven't already ;)
+
+And then we can create a gulpfile.js where we create some tasks:
 
 
