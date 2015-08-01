@@ -171,7 +171,16 @@ Let's create a index.html file with the following content:
 take care of that! ;) This minimal code snippet is taken from
 [here](https://github.com/henrikjoreteg/hjs-webpack#html-optional-can-be-boolean-or-function).
 
-Let's open the file in a browser:
+To explain the code above: The elm.js contains the complete Elm library source
+code plus our compiled elm program (the app.elm). We are loading it via script
+tag into our browser, but we still need to "start" the application. This happens
+with the function `Elm.fullscreen` (other ways can be found
+[here](http://elm-lang.org/guide/interop). We are passing our module as argument
+to the function, which is references as Elm.Main (Main is the default module
+name as we have not specified one in our source file). We will have a closer
+look at module at a later point.
+
+Now let's open the file in a browser:
 
     $ open index.html
 
