@@ -57,7 +57,7 @@ Some new packages are needed. Here is the upgrade plan.
 Do you approve of this plan? (y/n)
 ```
 
-Approve this and elm-make will install the elm-lang/core package.
+Approve this and elm-make will install the `elm-lang/core` package.
 
 Next elm will tell you that there are some errors in you source file:
 
@@ -100,7 +100,7 @@ Cannot find variable `text`
 Detected errors in 1 module.
 ```
 
-That's because the compiler can't find the functions span, class and text,
+That's because the compiler can't find the functions `span`, `class` and `text`,
 which are part of the [elm-html package](https://github.com/evancz/elm-html) 
 that we haven't installed yet.
 
@@ -109,7 +109,7 @@ So let's go ahead and install the missing dependency:
     $ elm-package install evancz/elm-html
 
 and agree to install the package. Elm will also suggest to install the
-virtual-dom package which we also agree. Elm will download the packages and
+`virtual-dom` package which we also agree. Elm will download the packages and
 hopefully finish with
 
 ```
@@ -167,9 +167,9 @@ Let's create a index.html file with the following content:
 <script>Elm.fullscreen(Elm.Main)</script>
 ```
 
-(Note: there seems to be some HTML missing, but don't worry, your browser will
+_Note: there seems to be some HTML missing, but don't worry, your browser will
 take care of that! ;) This minimal code snippet is taken from
-[here](https://github.com/henrikjoreteg/hjs-webpack#html-optional-can-be-boolean-or-function).)
+[here](https://github.com/henrikjoreteg/hjs-webpack#html-optional-can-be-boolean-or-function)._
 
 To explain the code above: The elm.js contains the complete Elm library source
 code plus our compiled elm program (the app.elm). We are loading it via script
@@ -184,8 +184,8 @@ Now let's open the file in a browser:
 
     $ open index.html
 
-(Note: open should open the file in your default browser. If that's not the
-case then replace the command with firefox, google-chrome or whatever.)
+_Note: open should open the file in your default browser. If that's not the
+case then replace the command with firefox, google-chrome or whatever._
 
 Now you should see the generate output of our elm program in the browser:
 
@@ -201,16 +201,19 @@ from above as child of the body tag:
 In this chapter we have done the first baby steps of installing the Elm
 platform, compiling a small elm program and displaying the output in a browser.
 
+This minimal complete example can be easily extended to show more complex
+static content in a HTML document.
+
+## Chapter 2 - Dev environment
+
 As our project will grow it is good practice to invest some time to set up a
 good development environment (including deployment) to create a proper modular
-application structure and to have reccuring tasks automated. We will take care
-of that in the next chapter. If you are not interested in this or have your
-own way managing your development process you can skip the next chapter and
-jump right into chapter 3 where we will extend our Elm application.
+application structure and to have reccuring tasks automated. In this chapter
+we will take care of that.
 
-### Chapter 2 - Dev environment
-
-...
+If you are not interested by this or already have your own way managing your
+development process you can skip this chapter and jump right into the next
+chapter where we will extend our previously developed Elm application.
 
 ### 2.1 - Managing your files via version control
 
