@@ -14,7 +14,7 @@ into a modular web application.
 
 ## Chapter 1 - Hello world example
 
-### 1.1 - Install
+### 1.1 Install
 
 Install the elm binaries, if you are on a Unix platform, simply run
 
@@ -22,7 +22,7 @@ Install the elm binaries, if you are on a Unix platform, simply run
 
 otherwise follow instructions on http://elm-lang.org/install.
 
-### 1.2 - Create the project
+### 1.2 Create the project
 
 Go in your application directory of choice, for example:
 
@@ -32,7 +32,7 @@ then create the project directory and go right into it:
 
     $ mkdir my-first-elm-app && cd !$
 
-### 1.3 - Create an Elm source file
+### 1.3 Create an Elm source file
 
 Now we are ready to create the first elm source code:
 
@@ -47,7 +47,7 @@ main = span [class "welcome-message"] [text "Hello, World!"]
 That's enough content for now, we will extend this later once the environment
 is set up.
 
-### 1.4 - Compiling the elm program
+### 1.4 Compiling the elm program
 
 Elm code is transpiled into JavaScript code. Let's do this with
 [elm-make](https://github.com/elm-lang/elm-make):
@@ -161,7 +161,7 @@ Success! Compiled 1 modules.
 Successfully generated elm.js
 ```
 
-### 1.5 - Running the application
+### 1.5 Running the application
 
 Now as our program has been compiled successfully, we can include the
 generated JavaScript code in a HTML file to view it in a browser.
@@ -206,7 +206,7 @@ from above as child of the body tag:
 
 ![DOM Tree Hello World Example](/docs/assets/dom-tree-hello-world.png?raw=true)
 
-### 1.6 - Summary
+### 1.6 Summary
 
 Now we have a minimal complete elm application running which compiles into
 JavaScript which can then be included into a HTML document and displayed in a
@@ -302,7 +302,7 @@ dont worry, we will take care of that build process in just a bit.
 Now we can run `open public/index.html` to see our application running as
 before (we still can see "Hello, World!").
 
-### 2.3 - Managing your files via version control
+### 2.3 Managing your files via version control
 
 It is time to use a version control system so we can keep track of our changes
 in a history and work on the code from different places or via collaboration.
