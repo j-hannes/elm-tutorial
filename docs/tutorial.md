@@ -183,7 +183,9 @@ Now you should see the generate output of our elm program in the browser:
 ![Browser Screenshow Hello World Example](/docs/assets/hello-world.png?raw=true)
 
 If we inspect our DOM tree we can see that Elm has appended the HTML snippet
-from above as child of the body tag.
+from above as child of the body tag:
+
+![DOM Tree Hello World Example](/docs/assets/dom-tree-hello-world.png?raw=true)
 
 ### 1.6 - Summary
 
