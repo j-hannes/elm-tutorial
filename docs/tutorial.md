@@ -1,12 +1,10 @@
 # How to develop an Elm web application
 
 This is a tutorial about how to create a web application where your client
-logic is written in [Elm](http://elm-lang.org). To learn more about the
-language you might want to read http://elm-lang.org/docs.
-
-If you like the readability, composability and type-safety of Haskell programs
-combined with the powerful paradigms of functional reactive programming, then
-Elm might be for you.
+logic is written in [Elm](http://elm-lang.org). If you like the readability,
+composability and type-safety of Haskell programs combined with the powerful
+paradigms of functional reactive programming, then Elm might be for you. To
+learn more about the language you might want to read http://elm-lang.org/docs.
 
 This document jumps right in to create a complete Elm web application from
 scratch, starting with a very simple static web site, which then gets scaled up
@@ -16,7 +14,7 @@ into a modular web application.
 
 ### 1.1 Install Elm
 
-Install the elm binaries, if you are on a Unix platform, simply run
+Install the Elm binaries, if you are on a Unix platform, simply run
 
     $ npm install --global elm
 
@@ -28,7 +26,7 @@ Go in your application directory of choice, for example:
 
     $ cd ~/apps 
 
-then create the project directory and go right into it:
+then create the project directory and change into it:
 
     $ mkdir my-first-elm-app && cd !$
 
@@ -38,13 +36,13 @@ Now we are ready to create the first elm source code:
 
     $ edit app.elm
 
-and lets create some simple content, inspired by the Elm homepage:
+and let's create some simple content (inspired by the Elm homepage):
 
 ```Elm
 main = span [class "welcome-message"] [text "Hello, World!"]
 ```
 
-That's enough content for now, we will extend this later once the environment
+That's enough content for now, we can extend this later once the environment
 is set up.
 
 ### 1.4 Compiling the elm program
@@ -150,11 +148,11 @@ Just for completeness, the code above will create the following HTML:
 We will dive later into more complex examples of how to construct DOM trees
 with Elm function composition.
 
-Now we can re-run our elm-make command from above:
+Now we can re-run our elm-make command from above
 
     $ elm-make app.elm
 
-And this time it will hopefully finish with:
+and this time it will hopefully finish with
 
 ```
 Success! Compiled 1 modules.
@@ -163,7 +161,7 @@ Successfully generated elm.js
 
 ### 1.5 Running the application
 
-Now as our program has been compiled successfully, we can include the
+Now as our program has been successfully compiled, we can include the
 generated JavaScript code in a HTML file to view it in a browser.
 
 Let's create a index.html file with the following content:
@@ -183,12 +181,12 @@ take care of that! ) This minimal code snippet is taken from
 
 To explain the code above: The elm.js contains the complete Elm library source
 code plus our compiled elm program (the app.elm). We are loading it via script
-tag into our browser, but we still need to "start" the application. This happens
-with the function `Elm.fullscreen` (other ways can be found
-[here](http://elm-lang.org/guide/interop)). We are passing our module as argument
-to the function, which is references as Elm.Main (Main is the default module
-name as we have not specified one in our source file). We will have a closer
-look at module at a later point.
+tag into our browser, but we still need to "start" the application. This can be
+done with the function `Elm.fullscreen` (other options of embedding can be
+found [here](http://elm-lang.org/guide/interop)). We are passing our module as
+argument to the function, which is references as Elm.Main (_Main_ is the default
+module name as we have not specified one in our source file). We will have a
+closer look at module at a later point.
 
 Now let's open the file in a browser:
 
@@ -206,7 +204,7 @@ from above as child of the body tag:
 
 ![DOM Tree Hello World Example](/docs/assets/dom-tree-hello-world.png?raw=true)
 
-Now we have a minimal complete elm application running which compiles into
+Now we have a minimal complete Elm application running which compiles into
 JavaScript which can then be included into a HTML document and displayed in a
 web browser. This example can easily be extended to display a more complex DOM
 tree.
@@ -336,9 +334,10 @@ that it would be nice to put that into an automated process / script. Another
 advantage is that everybody who checks out and uses our app will build things
 in the same way.
 
-So let's go ahead and use Gulp as build system for this purpose:
+So let's go ahead and use [Gulp](http://gulpjs.com) as build system for this
+purpose (if you haven't already):
 
-    $ npm install --global gulp # if you haven't already )
+    $ npm install --global gulp
 
 And then we can create a gulpfile.js where we create some tasks. Let's start
 with the first task to remove the public folder:
@@ -349,8 +348,8 @@ with the first task to remove the public folder:
 var del = require('del')
 var gulp = require('gulp')
 
-gulp.task('clean', function(cb) {
-    del(['public'], cb)
+gulp.task('clean', function(callback) {
+    del(['public'], callback)
 })
 ```
 
@@ -398,7 +397,8 @@ Let's test our second gulp task:
 
 Now we should find a public folder again with our index.html in it.
 
-Finally we need to create a task to compile the elm source code:
+Finally we need to create a task to compile the elm source code. We can use the
+gulp-elm plugin for that:
 
 ```JavaScript
 // ...
@@ -421,9 +421,9 @@ If we now run
 
     $ gulp elm
 
-we will also find the ~~elm.js~~ app.js in the public folder. We notice that
-the output file has changed it's name to app.js. We are ok with that and will
-just change the name in our index.html:
+we will also find the ~~elm.js~~ app.js in the public folder. Notice that the
+output file has changed it's name to app.js. We are ok with that and will just
+change the name in our index.html:
 
 ```HTML
 <!-- ... -->
@@ -436,7 +436,7 @@ and finally we can run
 
     $ open public/index.html
 
-and our application should run as before.
+and our application should work as before.
 
 Now we can compose all three steps together into a _build_ task:
 
@@ -500,6 +500,10 @@ Now we just need to add another step to each of the tasks _elm_ and _html_:
         .pipe(connect.reload())
 ```
 
+_Note: If you are getting confused where to put which code, you can have a look
+at [the complete
+file](https://github.com/j-hannes/my-first-elm-app/blob/0a78597fbd2b454b7b945f3ef72a5ace4e9f9cfc/gulpfile.js)._
+
 Finally we can add a dev task for us to run the server with live-reload:
 
 ```JavaScript
@@ -507,9 +511,10 @@ gulp.task('dev', ['build', 'watch', 'connect'])
 ```
 
 Now we can run gulp dev to start our server as well as live-reload in the
-background. In your browser you can visit http://localhost:8080 to see your
-application running. If you now make any changes to the app.elm or the
-index.html your browser will reload and your changes can be seen immediately.
+background. In your browser you can visit
+[http://localhost:8080](http://localhost:8080) to see your application running.
+If you now make any changes to the app.elm or the index.html your browser should
+reload and your changes can be seen immediately.
 
 We could now add the automated tasks to our documentation (readme.md):
 ```Markdown
@@ -527,8 +532,7 @@ We could now add the automated tasks to our documentation (readme.md):
 And add our changes to the git repository. Remember to add the *node_modules*
 directory to the *.gitignore* file and then run:
 
-    $ git add -p
-    $ git add
+    $ git add .
     $ git commit -v
 
 ### 2.5 Deployment
