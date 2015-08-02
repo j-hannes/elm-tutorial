@@ -6,8 +6,8 @@ var watch   = require('gulp-watch')
 var del         = require('del')
 var runSequence = require('run-sequence')
 
-gulp.task('clean', function(cb) {
-    del(['public'], cb)
+gulp.task('clean', function(callback) {
+    del(['public'], callback)
 })
 
 gulp.task('html', function() {
