@@ -14,7 +14,7 @@ into a modular web application.
 
 ## Chapter 1 - Hello world example
 
-### 1.1 Install
+### 1.1 Install Elm
 
 Install the elm binaries, if you are on a Unix platform, simply run
 
@@ -178,7 +178,7 @@ Let's create a index.html file with the following content:
 ```
 
 _Note: there seems to be some HTML missing, but don't worry, your browser will
-take care of that! ;) This minimal code snippet is taken from
+take care of that! ) This minimal code snippet is taken from
 [here](https://github.com/henrikjoreteg/hjs-webpack#html-optional-can-be-boolean-or-function)._
 
 To explain the code above: The elm.js contains the complete Elm library source
@@ -205,8 +205,6 @@ If we inspect our DOM tree we can see that Elm has appended the HTML snippet
 from above as child of the body tag:
 
 ![DOM Tree Hello World Example](/docs/assets/dom-tree-hello-world.png?raw=true)
-
-### 1.6 Summary
 
 Now we have a minimal complete elm application running which compiles into
 JavaScript which can then be included into a HTML document and displayed in a
@@ -246,22 +244,11 @@ following folder structure:
 └── src
     ├── elm
     │   └── app.elm
-    ├── html
-    │   └── index.html
-    └── js
-        └── app.js
+    └── html
+        └── index.html
 ```
 
 and move your app.elm and the index.html accordingly.
-
-We will also move the one line of JavaScript code `Elm.fullscreen(Elm.Main)`
-from the index.html to the app.js, so it looks like this:
-
-```JavaScript
-// src/js/app.js
-
-Elm.fullscreen(Elm.Main)
-```
 
 ### 2.2 Build your application
 
@@ -271,33 +258,15 @@ in it, which will be the only things that is deployed to production:
 ```
 .
 └── public
-    ├── bundle.js
+    ├── elm.js
     └── index.html
-```
-
-We will concatenate the elm.js and our app.js together in one file called
-bundle.js. So our new index.html now looks like:
-
-```HTML
-<!doctype html>
-<meta charset="utf-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no">
-<body></body>
-<script src="bundle.js"></script>
 ```
 
 Now we have to amend our build process a bit:
 
     $ mkdir public
     $ cp src/html/index.html public/
-    $ mkdir tmp
-    $ elm-make src/elm/app.elm --output tmp/elm.js
-    $ cat tmp/elm.js src/js/app.js > public/app.js
-    $ rm -rf tmp
-
-If you are now thinking that looks a bit complicated then you are right, but
-dont worry, we will take care of that build process in just a bit.
+    $ elm-make src/elm/app.elm --output public/elm.js
 
 Now we can run `open public/index.html` to see our application running as
 before (we still can see "Hello, World!").
@@ -349,7 +318,6 @@ complete the commit. Your commit should contain the following files
 # new file:   readme.md
 # new file:   src/elm/app.elm
 # new file:   src/html/index.html
-# new file:   src/js/app.js
 ```
 
 If we want we can also 
@@ -370,8 +338,204 @@ in the same way.
 
 So let's go ahead and use Gulp as build system for this purpose:
 
-    $ npm install --global gulp # if you haven't already ;)
+    $ npm install --global gulp # if you haven't already )
 
-And then we can create a gulpfile.js where we create some tasks:
+And then we can create a gulpfile.js where we create some tasks. Let's start
+with the first task to remove the public folder:
 
+```JavaScript
+// gulpfile.js
+
+var del = require('del')
+var gulp = require('gulp')
+
+gulp.task('clean', function(cb) {
+    del(['public'], cb)
+})
+```
+
+Before we can run this we need to install two npm dependencies. Let's first 
+initialize a new package.json file with
+
+    $ echo "{}" > package.json
+
+now we can install the dependencies with
+
+    $ npm install --save gulp del
+
+our package.json should now look like:
+
+```JSON
+{
+  "dependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0"
+  }
+}
+```
+
+If you prefer simplicity you can leave it like that. If you prefere completeness
+then you can add a name field, description field etc.
+
+Let's test our first gulp task:
+
+    $ gulp clean
+
+The public folder should now be gone.
+
+Now we can add another task to copy the index.html:
+
+```JavaScript
+gulp.task('html', function() {
+      gulp.src('./src/html/index.html')
+          .pipe(gulp.dest('./public/'))
+})
+```
+
+Let's test our second gulp task:
+
+    $ gulp html
+
+Now we should find a public folder again with our index.html in it.
+
+Finally we need to create a task to compile the elm source code:
+
+```JavaScript
+// ...
+var elm = require('gulp-elm')
+
+// ...
+
+gulp.task('elm', function() {
+    gulp.src('src/elm/app.elm')
+        .pipe(elm())
+        .pipe(gulp.dest('public'))
+})
+```
+
+Don't forget to run
+
+    $ npm install --save gulp-elm
+
+If we now run
+
+    $ gulp elm
+
+we will also find the ~~elm.js~~ app.js in the public folder. We notice that
+the output file has changed it's name to app.js. We are ok with that and will
+just change the name in our index.html:
+
+```HTML
+<!-- ... -->
+<body></body>
+<script src="app.js"></script>
+<script>Elm.fullscreen(Elm.Main)</script>
+```
+
+and finally we can run
+
+    $ open public/index.html
+
+and our application should run as before.
+
+Now we can compose all three steps together into a _build_ task:
+
+```JavaScript
+var runSequence = require('run-sequence')
+// ...
+
+gulp.task('build', function() {
+    runSequence('clean', ['html', 'js'])
+})
+```
+
+We have one more missing dependency to install:
+
+    $ npm install --save run-sequence
+
+And from here we can always create a clean build at any time with:
+
+    $ gulp build
+
+Now we can recompile our application with one command and provided an option for
+all collaborators on this project to do this step consistently.
+
+#### Development with live reload
+
+At the moment we would need to run `gulp build` and refresh the browser every
+time when we make changes on the Elm source code and want to see the resulting
+output.
+
+We can speed this process up quite a bit by serving the index.html by a small
+webserver and include a task that watches files for change and automatically
+refreshes the browser (live reload).
+
+To achieve this we, first we need a task that runs a webserver:
+
+```JavaScript
+var connect = require('gulp-connect')
+// ...
+
+gulp.task('connect', function() {
+    connect.server({
+        root: 'public',
+        livereload: true
+    })
+})
+```
+
+Then we can create a task that watches our source files for change and triggers
+tasks on change accordingly:
+
+```JavaScript
+gulp.task('watch', function() {
+    gulp.watch('src/elm/app.elm', ['elm'])
+    gulp.watch('src/html/index.html', ['html'])
+})
+```
+
+Now we just need to add another step to each of the tasks _elm_ and _html_:
+
+```JavaScript
+        .pipe(connect.reload())
+```
+
+Finally we can add a dev task for us to run the server with live-reload:
+
+```JavaScript
+gulp.task('dev', ['build', 'watch', 'connect'])
+```
+
+Now we can run gulp dev to start our server as well as live-reload in the
+background. In your browser you can visit http://localhost:8080 to see your
+application running. If you now make any changes to the app.elm or the
+index.html your browser will reload and your changes can be seen immediately.
+
+We could now add the automated tasks to our documentation (readme.md):
+```Markdown
+## Build
+
+    $ npm install --production
+    $ gulp build
+
+## Development
+
+    $ npm install
+    $ gulp dev
+```
+
+And add our changes to the git repository. Remember to add the *node_modules*
+directory to the *.gitignore* file and then run:
+
+    $ git add -p
+    $ git add
+    $ git commit -v
+
+### 2.5 Deployment
+
+
+
+## Chapter 3 - Modular application architecture
+
+Use start-app 
 
