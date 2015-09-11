@@ -1,3 +1,6 @@
+*Note: started this a month ago, still WIP, but definitely willing to continue
+soon ^^.*
+
 # How to develop an Elm web application
 
 This is a tutorial about how to create a web application where your client
