@@ -200,12 +200,12 @@ case then replace the command with firefox, google-chrome or whatever._
 
 Now you should see the generate output of our elm program in the browser:
 
-![Browser Screenshow Hello World Example](/docs/assets/hello-world.png?raw=true)
+![Browser Screenshow Hello World Example](/assets/hello-world.png?raw=true)
 
 If we inspect our DOM tree we can see that Elm has appended the HTML snippet
 from above as child of the body tag:
 
-![DOM Tree Hello World Example](/docs/assets/dom-tree-hello-world.png?raw=true)
+![DOM Tree Hello World Example](/assets/dom-tree-hello-world.png?raw=true)
 
 Now we have a minimal complete Elm application running which compiles into
 JavaScript which can then be included into a HTML document and displayed in a
