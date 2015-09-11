@@ -31,7 +31,7 @@ Go in your application directory of choice, for example:
 
 then create the project directory and change into it:
 
-    $ mkdir my-first-elm-app && cd !$
+    $ mkdir my-first-elm-app; cd !$
 
 ### 1.3 Create an Elm source file
 
