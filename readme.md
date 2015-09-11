@@ -542,5 +542,4 @@ directory to the *.gitignore* file and then run:
 
 ## Chapter 3 - Modular application architecture
 
-Use start-app 
-
+TBC ... _use start-app_
