@@ -42,7 +42,10 @@ Now we are ready to create the first elm source code:
 and let's create some simple content (inspired by the Elm homepage):
 
 ```Elm
-main = span [class "welcome-message"] [text "Hello, World!"]
+main =
+  span
+    [class "welcome-message"]
+    [text "Hello, World!"]
 ```
 
 That's enough content for now, we can extend this later once the environment
@@ -140,7 +143,10 @@ accordingly in our source file:
 import Html exposing (span, text)
 import Html.Attributes exposing (class)
 
-main = span [class "welcome-message"] [text "Hello, World!"]
+main =
+  span
+    [class "welcome-message"]
+    [text "Hello, World!"]
 ```
 
 Just for completeness, the code above will create the following HTML:
