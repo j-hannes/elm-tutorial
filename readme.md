@@ -391,6 +391,9 @@ If you prefer simplicity you can leave it like that. If you prefer completeness
 then you can add a name field, description field etc. (or initialize your
 repository via `npm init`). 
 
+Since we are not including external dependencies in our git repository, we
+need to add the node_modules folder to our .gitignore list.
+
 Let's test our first gulp task:
 
     $ gulp clean
