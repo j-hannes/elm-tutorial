@@ -392,7 +392,7 @@ then you can add a name field, description field etc. (or initialize your
 repository via `npm init`). 
 
 Since we are not including external dependencies in our git repository, we
-need to add the node_modules folder to our .gitignore list.
+need to add the node_modules folder to our .gitignore file.
 
 Let's test our first gulp task:
 
@@ -461,17 +461,8 @@ and our application should work as before.
 Now we can compose all three steps together into a _build_ task:
 
 ```JavaScript
-var runSequence = require('run-sequence')
-// ...
-
-gulp.task('build', function() {
-  runSequence('clean', ['html', 'js'])
-})
+gulp.task('build', ['clean', 'html', 'js'])
 ```
-
-We have one more missing dependency to install:
-
-    $ npm install --save run-sequence
 
 And from here we can always create a clean build at any time with:
 
