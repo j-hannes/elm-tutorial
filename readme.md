@@ -372,7 +372,7 @@ initialize a new package.json file with
 
     $ echo "{}" > package.json
 
-(or via `npm init` if you prefer). Now we can install the dependencies with
+Now we can install the dependencies with
 
     $ npm install --save gulp del
 
@@ -387,8 +387,9 @@ our package.json should now look like:
 }
 ```
 
-If you prefer simplicity you can leave it like that. If you prefere completeness
-then you can add a name field, description field etc.
+If you prefer simplicity you can leave it like that. If you prefer completeness
+then you can add a name field, description field etc. (or initialize your
+repository via `npm init`). 
 
 Let's test our first gulp task:
 
