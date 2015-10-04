@@ -161,10 +161,10 @@ Now we can re-run our elm-make command from above
 
     $ elm-make app.elm
 
-and this time it will hopefully finish with
+and this time it will hopefully finish with something like
 
 ```
-Success! Compiled 1 modules.
+Success! Compiled 6 modules.
 Successfully generated elm.js
 ```
 
@@ -177,14 +177,15 @@ Let's create a index.html file with the following content:
 ```HTML
 <!doctype html>
 <meta charset="utf-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, user-scalable=no">
 <body></body>
 <script src="elm.js"></script>
 <script>Elm.fullscreen(Elm.Main)</script>
 ```
 
-_Note: there seems to be some HTML missing, but don't worry, your browser will
+_Note: If this HTML snippet looks weird to you, don't worry, your browser will
 take care of that! ) This minimal code snippet is taken from
 [here](https://github.com/henrikjoreteg/hjs-webpack#html-optional-can-be-boolean-or-function)._
 
@@ -255,7 +256,8 @@ following folder structure:
         └── index.html
 ```
 
-and move your app.elm and the index.html accordingly.
+and move your app.elm and the index.html accordingly. You can also delete the
+previously generated elm.js file from your project root.
 
 ### 2.2 Build your application
 
@@ -304,8 +306,7 @@ now:
 ```Markdown
 # My first elm app
 
-Application to follow along
-https://github.com/j-hannes/my-first-elm-app/blob/master/docs/tutorial.md.
+Application to follow along https://github.com/j-hannes/elm-tutorial.
 ```
 
 Now we can add our current program to the repository:
@@ -316,8 +317,8 @@ commit the changes with
 
     $ git commit -v
 
-and enter a commit message ("Initialize repository" or something like that) to
-complete the commit. Your commit should contain the following files
+and enter a commit message ("Generate first files" or something) to complete
+the commit. Your commit should contain the following files
 
 ```Gitcommit
 # new file:   .gitignore
@@ -332,6 +333,10 @@ If we want we can also
 and add it as remote repository to our project:
 
     $ git remote add origin git@github.com:my-username/my-repository
+
+And eventually push your code via:
+
+    $ git push --set-upstream origin master
 
 From here our project is under version control which makes it easy to undo/redo
 changes and to add new features via branching etc.
@@ -367,7 +372,7 @@ initialize a new package.json file with
 
     $ echo "{}" > package.json
 
-now we can install the dependencies with
+(or via `npm init` if you prefer). Now we can install the dependencies with
 
     $ npm install --save gulp del
 
