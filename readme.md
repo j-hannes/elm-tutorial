@@ -363,7 +363,7 @@ var del = require('del')
 var gulp = require('gulp')
 
 gulp.task('clean', function(callback) {
-    del(['public'], callback)
+  del(['public'], callback)
 })
 ```
 
@@ -401,8 +401,9 @@ Now we can add another task to copy the index.html:
 
 ```JavaScript
 gulp.task('html', function() {
-      gulp.src('./src/html/index.html')
-          .pipe(gulp.dest('./public/'))
+  gulp
+    .src('./src/html/index.html')
+    .pipe(gulp.dest('./public/'))
 })
 ```
 
@@ -422,9 +423,10 @@ var elm = require('gulp-elm')
 // ...
 
 gulp.task('elm', function() {
-    gulp.src('src/elm/app.elm')
-        .pipe(elm())
-        .pipe(gulp.dest('public'))
+  gulp
+    .src('src/elm/app.elm')
+    .pipe(elm())
+    .pipe(gulp.dest('public'))
 })
 ```
 
@@ -460,7 +462,7 @@ var runSequence = require('run-sequence')
 // ...
 
 gulp.task('build', function() {
-    runSequence('clean', ['html', 'js'])
+  runSequence('clean', ['html', 'js'])
 })
 ```
 
@@ -472,8 +474,8 @@ And from here we can always create a clean build at any time with:
 
     $ gulp build
 
-Now we can recompile our application with one command and provided an option for
-all collaborators on this project to do this step consistently.
+Now we can recompile our application with one command and provided an option
+for all collaborators on this project to do this step consistently.
 
 #### Development with live reload
 
@@ -492,10 +494,10 @@ var connect = require('gulp-connect')
 // ...
 
 gulp.task('connect', function() {
-    connect.server({
-        root: 'public',
-        livereload: true
-    })
+  connect.server({
+    root: 'public',
+    livereload: true
+  })
 })
 ```
 
@@ -504,15 +506,15 @@ tasks on change accordingly:
 
 ```JavaScript
 gulp.task('watch', function() {
-    gulp.watch('src/elm/app.elm', ['elm'])
-    gulp.watch('src/html/index.html', ['html'])
+  gulp.watch('src/elm/app.elm', ['elm'])
+  gulp.watch('src/html/index.html', ['html'])
 })
 ```
 
 Now we just need to add another step to each of the tasks _elm_ and _html_:
 
 ```JavaScript
-        .pipe(connect.reload())
+    .pipe(connect.reload())
 ```
 
 _Note: If you are getting confused where to put which code, you can have a look
