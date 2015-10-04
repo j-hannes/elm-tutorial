@@ -461,7 +461,7 @@ and our application should work as before.
 Now we can compose all three steps together into a _build_ task:
 
 ```JavaScript
-gulp.task('build', ['clean', 'html', 'js'])
+gulp.task('build', ['clean', 'html', 'elm'])
 ```
 
 And from here we can always create a clean build at any time with:
