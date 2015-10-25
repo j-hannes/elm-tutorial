@@ -48,6 +48,10 @@ main =
 That's enough content for now, we can extend this later once the environment
 is set up.
 
+_Note: If you don't have syntax highlighing for Elm, now would be a good time to
+install the according package. There are packages for Sublime, Atom, Vim etc.
+available._
+
 ### 1.4 Compiling the elm program
 
 Elm code is transpiled into JavaScript code. Let's do this with
