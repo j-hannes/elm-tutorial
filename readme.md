@@ -35,11 +35,8 @@ then create the project directory and change into it:
 
 ### 1.3 Create an Elm source file
 
-Now we are ready to create the first elm source code:
-
-    $ edit app.elm
-
-and let's create some simple content (inspired by the Elm homepage):
+Now we are ready to create the first elm source code. Let's create a file named
+_app.elm_ right in our projet root and put the following content in it:
 
 ```Elm
 main =
