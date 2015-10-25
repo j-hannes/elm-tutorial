@@ -31,7 +31,7 @@ Go in your application directory of choice, for example:
 
 then create the project directory and change into it:
 
-    $ mkdir my-first-elm-app; cd !$
+    $ mkdir my-first-elm-app; cd $_
 
 ### 1.3 Create an Elm source file
 
@@ -494,6 +494,8 @@ gulp.task('connect', function() {
   })
 })
 ```
+
+We need to install our new dependency via `npm install --save gulp-connect`.
 
 Then we can create a task that watches our source files for change and triggers
 tasks on change accordingly:
