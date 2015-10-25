@@ -176,23 +176,35 @@ generated JavaScript code in a HTML file to view it in a browser.
 Let's create a index.html file with the following content:
 ```HTML
 <!doctype html>
-<meta charset="utf-8">
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, user-scalable=no">
-<body></body>
-<script src="elm.js"></script>
-<script>Elm.fullscreen(Elm.Main)</script>
-```
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Elm app</title>
+  </head>
 
-_Note: If this HTML snippet looks weird to you, don't worry, your browser will
-take care of that! ) This minimal code snippet is taken from
-[here](https://github.com/henrikjoreteg/hjs-webpack#html-optional-can-be-boolean-or-function)._
+  <body>
+    <div id="app"></div>
+  </body>
+
+  <!-- load elm library + compiled application -->
+  <script src="elm.js"></script>
+
+  <!-- embed and start app -->
+  <script>
+    var appContainer = document.getElementById('app');
+    Elm.embed(Elm.Main, appContainer);
+  </script>
+
+</html>
+```
 
 To explain the code above: The elm.js contains the complete Elm library source
 code plus our compiled elm program (the app.elm). We are loading it via script
 tag into our browser, but we still need to "start" the application. This can be
-done with the function `Elm.fullscreen` (other options of embedding can be
+done with the function `Elm.embed` (other options of embedding can be
 found [here](http://elm-lang.org/guide/interop)). We are passing our module as
 argument to the function, which is references as Elm.Main (_Main_ is the default
 module name as we have not specified one in our source file). We will have a
